@@ -28,9 +28,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="loading" class="loader-container">
-    <div class="loader"></div>
-  </div>
+  <LoaderComponent :loading="loading" v-if="loading"></LoaderComponent>
   <div class="movie-details" v-else>
     <div class="poster-container">
       <img :src="movie.Poster" :alt="movie.Title" class="poster" />
@@ -44,7 +42,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style lang="scss">
-@import '@/assets/scss/movie-details.scss';
-</style>

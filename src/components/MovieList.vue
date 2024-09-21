@@ -4,14 +4,22 @@ export default {
   data() {
     return {
       searchQuery: 'action',
-      movies: []
+      movies: [],
+      loader: false
     }
   },
   methods: {
     async getMovies() {
-      if (this.searchQuery.length > 0) {
-        const data = await fetchMovies(this.searchQuery)
-        this.movies = data.Search
+      this.loading = true
+      try {
+        if (this.searchQuery.length > 0) {
+          const data = await fetchMovies(this.searchQuery)
+          this.movies = data.Search
+        }
+      } catch (error) {
+        console.error('Error fetching movie details:', error)
+      } finally {
+        this.loading = false
       }
     },
     goToDetails(id) {
@@ -25,7 +33,8 @@ export default {
 </script>
 
 <template>
-  <div class="movie-list">
+  <LoaderComponent :loading="loading" v-if="loading"></LoaderComponent>
+  <div class="movie-list" v-else>
     <div
       v-for="movie in movies"
       :key="movie.imdbID"
@@ -37,7 +46,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style lang="scss">
-@import '@/assets/scss/movie-list.scss';
-</style>
