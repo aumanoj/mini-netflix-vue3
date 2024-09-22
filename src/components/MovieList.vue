@@ -17,7 +17,7 @@ export default {
           this.movies = data.Search
         }
       } catch (error) {
-        console.error('Error fetching movie details:', error)
+        console.error('Error fetching movies:', error)
       } finally {
         this.loading = false
       }
